@@ -14,7 +14,6 @@ if (leadsFromLocalStorage) {
   myLeads = leadsFromLocalStorage;
   render(myLeads);
 }
-const tabs = [{ url: "https://www.mickythegek.com" }];
 
 function render(leads) {
   let listItems = "";
@@ -30,10 +29,12 @@ function render(leads) {
 
 // Save Tab
 tabBtn.addEventListener("click", () => {
-  // Using localStorage
-  myLeads.push(tabs[0].url);
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  render(myLeads);
+  // Grab the current Tab
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    myLeads.push(tabs[0].url);
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
+    render(myLeads);
+  });
 });
 
 // The Save Input
