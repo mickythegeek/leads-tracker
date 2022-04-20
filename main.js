@@ -5,11 +5,20 @@ const inputBtn = document.getElementById("input-btn");
 
 const ulEl = document.getElementById("ul-el");
 
-// console.log(ulEl);
+// Get the leads from LocalStorage
+leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+
+// Check if leadsFromLocalStorage is truthy
+if (leadsFromLocalStorage) {
+  myLeads = leadsFromLocalStorage;
+  renderLeads();
+}
 
 inputBtn.addEventListener("click", () => {
   myLeads.push(inputEl.value);
   inputEl.value = "";
+
+  localStorage.setItem("myLeads", JSON.stringify(myLeads));
   renderLeads();
 });
 
