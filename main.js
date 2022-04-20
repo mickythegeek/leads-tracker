@@ -11,33 +11,32 @@ const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
 // Check if leadsFromLocalStorage is truthy
 if (leadsFromLocalStorage) {
   myLeads = leadsFromLocalStorage;
-  renderLeads();
+  render(myLeads);
 }
-// When the Save Input button is clicked
-inputBtn.addEventListener("click", () => {
-  myLeads.push(inputEl.value);
-  inputEl.value = "";
 
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  renderLeads();
-});
-
-deleteBtn.addEventListener("dblclick", () => {
-  localStorage.clear();
-  myLeads = [];
-  renderLeads();
-});
-
-function renderLeads() {
+function render(leads) {
   let listItems = "";
-  for (let i = 0; i < myLeads.length; i++) {
+  for (let i = 0; i < leads.length; i++) {
     listItems += `<li>
-              <a target = '_blank' href = '${myLeads[i]}'>
-                ${myLeads[i]} 
+              <a target = '_blank' href = '${leads[i]}'>
+                ${leads[i]} 
               </a>
           </li>`;
   }
   ulEl.innerHTML = listItems;
 }
 
+// When the Save Input button is clicked
+inputBtn.addEventListener("click", () => {
+  myLeads.push(inputEl.value);
+  inputEl.value = "";
 
+  localStorage.setItem("myLeads", JSON.stringify(myLeads));
+  render(myLeads);
+});
+
+deleteBtn.addEventListener("dblclick", () => {
+  localStorage.clear();
+  myLeads = [];
+  render(myLeads);
+});
